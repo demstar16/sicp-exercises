@@ -1,0 +1,6 @@
+(define (deep-reverse inputList)
+	(define (deep-reverse-iter inputList newList)
+		(cond ((null? inputList) inputList)
+			((pair? (car inputList)) (deep-reverse-iter (cdr inputList) (cons (deep-reverse-iter (car inputList)) newList)))
+			(else (deep-reverse-iter (cdr inputList) (cons (car inputList) newList)))))
+	(deep-reverse-iter inputList (list )))
