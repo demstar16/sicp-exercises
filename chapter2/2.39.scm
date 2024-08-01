@@ -1,0 +1,33 @@
+; Test Harness
+(define (test message procedure expected)
+  (display "TEST: ")
+  (display message)
+  (newline)
+  (display "EXPECT: ")
+  (display expected)
+  (newline)
+  (display "ACTUAL: ")
+  (display procedure)
+  (newline)
+  (newline)
+
+(define (append-item item-to-append list-to-append-to)
+  (cond ((eq? nil item-to-append) list-to-append-to)
+        (else (append list-to-append-to (list item-to-append)))))
+(test "given no item and an empty list, it returns an empty list" (append-item nil (list )) '())
+(test "given 1 item and an empty list, it returns a list with 1 item" (append-item 1 (list )) '(1))
+(test "given 1 item and a list with 1 item, it returns a list with the item appended" (append-item 2 (list 1)) '(1 2))
+
+(define (reverse-right sequence)
+  (fold-right append-item nil sequence))
+
+(define (prepend-item list-to-prepend-to item-to-prepend)
+  (cond ((eq? nil item-to-prepend)  list-to-prepend-to)
+        (else (append (list item-to-prepend) list-to-prepend-to))))
+(test "given no item and an empty list, it returns an empty list" (prepend-item (list ) nil) '())
+(test "given 1 item and an empty list, it returns a list with 1 item" (prepend-item (list ) 1) '(1))
+(test "given 1 item and a list with 1 item, it returns a list with the item prepended" (prepend-item (list 1) 2) '(2 1))
+(test "given 1 item and a list with multiple items, it returns a list with the item prepended" (prepend-item (list 1 2) 3) '(3 1 2))
+
+(define (reverse sequence)
+  (fold-left prepend-item nil sequence))
