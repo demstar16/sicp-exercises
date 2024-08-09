@@ -73,19 +73,28 @@
 (test "triple-sum?: Doesn't sum to s" (triple-sum? '(1 1 1) 4) #f)
 (test "triple-sum?: Does sum to s" (triple-sum? '(2 1 1) 4) #t)
 
+(define (create-triple-sum-eq s)
+  (define (triple-sum-eq triple)
+    (triple-sum? triple s)  
+  )
+  triple-sum-eq
+)
+
+(test "create-triple-sum-eq" ((create-triple-sum-eq 4) '(1 1 1))  #f)
+(test "create-triple-sum-eq" ((create-triple-sum-eq 4) '(1 2 1))  #t)
+
 (define (make-triple-sum triple)
   (append triple (list (accumulate + 0 triple))))
 
 (test "make-triple-sum: correctly appends the sum" (make-triple-sum '(1 2 3)) '(1 2 3 6))
 
 (define (ordered-triple-sum n s)
-  (define (nested-triple-sum? triple)
-   (= s (accumulate + 0 triple)))
+  (define triple-sum-eq-s (create-triple-sum-eq s))
   (map make-triple-sum
-       (filter nested-triple-sum?
+       (filter triple-sum-eq-s
                (ordered-triples n))))
 
 (test "ordered-triple-sum: Given 0 0" (ordered-triple-sum 0 0) '())
 (test "ordered-triple-sum: Given a 's' value that can't be met by the ordered triples" (ordered-triple-sum 4 30) '())
-(test "ordered-triple-sum: Given a 's' value that will be met by some combination" (ordered-triple-sum 8 6) '(3 2 1 6))
+(test "ordered-triple-sum: Given a 's' value that will be met by some combination" (ordered-triple-sum 8 6) '((3 2 1 6)))
 (test "ordered-triple-sum: Given a 'n' and 's' value that will produce a list with multiple values" (ordered-triple-sum 10 10) '((5 3 2 10) (5 4 1 10) (6 3 1 10) (7 2 1 10))) 
