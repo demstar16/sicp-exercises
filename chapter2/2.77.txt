@@ -1,0 +1,6 @@
+This is all that is required because the functions to obtain what we're after exist, we are only missing them and their mappings within our table. In other words there was no operation called magnitude with a type of complex.
+
+(put 'magnitude '(complex) magnitude) 
+Will put the magnitude procedure into our table.
+
+In terms of apply-generic invocations. It will be invoked the first time with the operation as magnitude and the tag as "complex". Then (going off the representation in the diagram, rectangular form is used) apply-generic will then get invoked again with the tag "rectangular" which will then call the correct magnitude method. 
