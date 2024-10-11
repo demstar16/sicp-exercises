@@ -15,5 +15,5 @@
 
 (paint (right-split einstein 2))
 (paint (up-split einstein 2))
-(paint-to-png (right-split einstein 2) "chapter2/2.45a.png")
-(paint-to-png (up-split einstein 2) "chapter2/2.45b.png")
+(paint-to-png (right-split einstein 2) "chapter2/images/2.45a.png")
+(paint-to-png (up-split einstein 2) "chapter2/images/2.45b.png")
